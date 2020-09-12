@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="429.0" prefWidth="564.0" style="-fx-background-color: #4D425C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFormController">
+   <children>
+      <ImageView fitHeight="67.0" fitWidth="89.0" layoutX="171.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/Books-icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="67.0" layoutX="171.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/member.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="73.0" fitWidth="101.0" layoutX="168.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/lend.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="73.0" fitWidth="73.0" layoutX="171.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/Return.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnMembers" layoutX="155.0" layoutY="115.0" onAction="#btnMembers_OnAction" prefHeight="86.0" prefWidth="280.0" text="Members" textFill="#eec491">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnLending" layoutX="155.0" layoutY="226.0" onAction="#btnLending_OnAction" prefHeight="86.0" prefWidth="280.0" text="Lending" textFill="#eec491">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnReturn" layoutX="155.0" layoutY="332.0" onAction="#btnReturn_OnAction" prefHeight="86.0" prefWidth="280.0" text="Return" textFill="#eec491">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnBooks" layoutX="155.0" layoutY="14.0" onAction="#btnBooks_OnAction" prefHeight="86.0" prefWidth="280.0" text="Books" textFill="#eec491">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
