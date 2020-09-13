@@ -57,6 +57,9 @@ public class ReturnFormController {
         cmbMembers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MembersTM>() {
             @Override
             public void changed(ObservableValue<? extends MembersTM> observable, MembersTM oldValue, MembersTM selectedMember) {
+                if (selectedMember==null) {
+                    return;
+                }
                 txtMemberName.setText(selectedMember.getMemberName());
                 int i;
 
@@ -98,8 +101,11 @@ public class ReturnFormController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        loadMembers();
         calculateFee();
         returnBooks.clear();
+        txtMemberName.clear();
+        cmbMembers.getSelectionModel().clearSelection();
     }
     @SuppressWarnings("Duplicates")
     public void btnBack_OnAction(ActionEvent actionEvent) throws IOException {
@@ -119,19 +125,13 @@ public class ReturnFormController {
         members.clear();
         try {
             Statement stm = DBConnection.getInstance().getConnection().createStatement();
-            ResultSet rst = stm.executeQuery("SELECT id,name,phone_num FROM Member\n" +
-                    "INNER JOIN Borrow B on Member.id = B.m_id\n" +
-                    "LEFT OUTER JOIN `Return` R on B.borrow_id = R.borrow_id GROUP BY id");
-
-            /*SELECT id,name,phone_num FROM Member\n" +
-            "INNER JOIN Borrow B on Member.id = B.m_id\n" +
-                    "LEFT OUTER JOIN `Return` R on B.borrow_id = R.borrow_id GROUP BY id*/
+            ResultSet rst = stm.executeQuery("SELECT M.id,M.name,M.phone_num,BO.borrow_id FROM Member M" +
+                    " INNER JOIN Borrow BO on M.id = BO.m_id where BO.borrow_id not in (select borrow_id from `return`)");
 
             while(rst.next()){
                 String m_id = rst.getString(1);
                 String name = rst.getString(2);
                 String phone_num = rst.getString(3);
-
                 members.add(new MembersTM(m_id, name, phone_num));
             }
         } catch (SQLException e) {
@@ -142,16 +142,15 @@ public class ReturnFormController {
     public void loadReturnTable(){
         try {
             Statement stm = DBConnection.getInstance().getConnection().createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM Book\n" +
-                    "INNER JOIN Borrow B on Book.isbn = B.isbn\n" +
-                    "LEFT OUTER JOIN `Return` R on B.borrow_id = R.borrow_id");
+            ResultSet rst = stm.executeQuery("SELECT B.isbn,B.title,BO.borrow_id,BO.m_id FROM Book B" +
+                    " INNER JOIN Borrow BO on B.isbn = BO.isbn where BO.borrow_id not in (select borrow_id from `return`)\n");
 
             while(rst.next()){
                 String isbn = rst.getString(1);
                 String title = rst.getString(2);
-                String borrowId = rst.getString("borrow_id");
+                String borrowId = rst.getString(3);
 
-                String memberId = rst.getString("m_id");
+                String memberId = rst.getString(4);
 
                 memberIds.add(memberId);
                 returningBooks.add(new ReturnTM(borrowId,isbn,title));
