@@ -76,7 +76,7 @@ public class BooksController {
 
     @SuppressWarnings("Duplicates")
     public void btnSave_OnAction(ActionEvent actionEvent) {
-
+        System.out.println(actionEvent);
         String ISBN = txtISBN.getText();
         String name = txtName.getText();
         String author = txtAuthor.getText();
